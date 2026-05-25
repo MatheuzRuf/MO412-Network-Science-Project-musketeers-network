@@ -1,0 +1,33 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+
+# Raw and intermediate data (large / personal files)
+data/raw/
+data/clean/
+data/chapters/
+data/cache/
+
+# Generated outputs (large files — regenerate with main.py + export_gexf.py)
+outputs/graphs/
+outputs/trilogy_dynamic.gexf
+outputs/window_timestep_map.txt
+
+# Keep the metrics CSV (small, useful reference)
+!outputs/metrics.csv
+
+# Editor / OS
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
