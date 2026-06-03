@@ -249,7 +249,8 @@ _NAME_BLOCKLIST = {
 # Maps lowercase variant spellings to the canonical lowercase name.
 # Applied after extraction to merge nodes split by accent/OCR differences.
 _CHAR_ALIASES: dict[str, str] = {
-    "fère":            "fere",       # Comte de La Fère (Athos)
+    "fère":            "athos",      # Comte de La Fère = Athos
+    "fere":            "athos",      # unaccented form also = Athos
     "condé":           "conde",      # Prince de Condé
     "henriette":       "henrietta",  # Henrietta of England
     "danicamp":        "manicamp",   # OCR error variant
