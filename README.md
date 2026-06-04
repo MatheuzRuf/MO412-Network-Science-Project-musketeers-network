@@ -71,62 +71,31 @@ Raw .txt ──► Chapter splitter ──► Character extractor ──► Scen
 
 ## Results
 
-### Corpus-level
+> Full analysis — per-book character breakdowns, sentiment arcs, relationship tables, and research question results — is in [RESULTS.md](RESULTS.md).
+
+### Quick corpus summary
 
 | Metric | Value |
 |--------|-------|
 | Total time steps (windows) | **370** |
-| Unique characters (nodes) | **269** |
-| Total edge-instances (across all windows) | **56 631** |
-| Avg nodes per window | 23.5 (min 11, max 43) |
-| Avg edges per window | 153 (min 37, max 418) |
-| Positive edges | 87.1 % |
-| Negative edges | 12.9 % |
-| Mean edge sentiment | 0.562 |
+| Unique characters | **269** |
+| Mean edge sentiment (VADER) | **0.562** |
+| Positive edges | **87.1 %** |
 | Mean structural balance ratio | **0.858** |
+| Avg power-law γ (degree dist.) | **2.02** |
+| Avg Louvain communities/window | **2.67** |
+| Heider balance rate (triangles) | **85.5 %** |
 
-Structural balance is defined as the fraction of closed triangles whose edge-sign product is +1 ("the enemy of my enemy is my friend"). A value of 0.858 means 85.8 % of all triangles in the average window satisfy balance theory — well above the random baseline (~0.5).
+### Per-book at a glance
 
-### Per-book breakdown
-
-| Book | Windows | Avg nodes | Avg edges | Avg sentiment | +edge % | Avg balance |
-|------|---------|-----------|-----------|---------------|---------|-------------|
-| *The Three Musketeers* | 58 | 22.9 | 152.6 | 0.496 | 83.6 % | 0.820 |
-| *Twenty Years After* | 81 | 30.2 | 246.7 | 0.473 | 83.6 % | 0.824 |
-| *The Vicomte de Bragelonne* | 66 | 21.2 | 113.6 | 0.630 | 90.6 % | 0.893 |
-| *Ten Years Later* | 56 | 22.2 | 147.7 | 0.742 | 95.1 % | 0.930 |
-| *Louise de la Vallière* | 58 | 20.4 | 108.5 | 0.660 | 94.1 % | 0.919 |
-| *The Man in the Iron Mask* | 51 | 21.1 | 112.5 | 0.381 | 81.0 % | 0.763 |
-
-Notable patterns:
-- **Books 4–5** (*Ten Years Later* / *Louise de la Vallière*) are the most positive and most structurally balanced — the court intrigue arc is more courtly than violent.
-- **Book 6** (*The Man in the Iron Mask*) drops sharply in sentiment (0.381) and balance (0.763) as key characters die and alliances fracture — the most structurally unstable arc of the trilogy.
-- **Book 2** (*Twenty Years After*) has the most complex networks (avg 30.2 nodes, 246.7 edges per window) — the widest cast, reflecting the civil war and dual-front plot.
-
-### Top 20 characters (by number of windows appeared in)
-
-| Rank | Character | Windows |
-|------|-----------|---------|
-| 1 | Aramis | 274 |
-| 2 | Louis (XIV) | 255 |
-| 3 | Athos | 246 |
-| 4 | Raoul (Vicomte de Bragelonne) | 238 |
-| 5 | Porthos | 235 |
-| 6 | Mazarin | 221 |
-| 7 | Charles (II of England) | 197 |
-| 8 | Fouquet | 194 |
-| 9 | Fère (Athos's full title) | 183 |
-| 10 | Planchet | 179 |
-| 11 | Grimaud | 176 |
-| 12 | Colbert | 172 |
-| 13 | Anne (of Austria) | 164 |
-| 14 | Vallière (Louise de la) | 159 |
-| 15 | Guiche | 151 |
-| 16 | Richelieu | 150 |
-| 17 | Henrietta (of England) | 143 |
-| 18 | Montalais | 126 |
-| 19 | Louise | 120 |
-| 20 | Buckingham | 118 |
+| Book | Windows | Avg sentiment | Avg balance | Dominant characters |
+|------|---------|:------------:|:-----------:|---------------------|
+| *The Three Musketeers* | 58 | 0.496 | 0.820 | Athos · Porthos · Aramis · Milady |
+| *Twenty Years After* | 81 | 0.473 | 0.824 | Athos · Charles II · Mazarin · Mordaunt |
+| *The Vicomte de Bragelonne* | 66 | 0.630 | 0.893 | Louis · Athos · Charles II · Monk |
+| *Ten Years Later* | 56 | 0.742 | 0.930 | Louis · Guiche · Raoul · Vallière |
+| *Louise de la Vallière* | 58 | 0.660 | 0.919 | Louis · Vallière · Raoul · Saint-Aignan |
+| *The Man in the Iron Mask* | 51 | 0.381 | 0.763 | Louis · Aramis · Fouquet · Colbert |
 
 ---
 
@@ -144,7 +113,8 @@ pip install -r requirements.txt
 # 4. Place the six Gutenberg plain-text files in data/raw/
 #    (filenames must match those in src/config.py)
 
-# 5. Run the pipeline
+
+# 5. Run the pipeline  (also computes RQ1/RQ2/RQ3 metrics)
 python main.py
 
 # 6. Export the dynamic GEXF for Gephi
@@ -179,3 +149,5 @@ Copy `.env.example` to `.env` and set any overrides (all have defaults).
 **Sentiment** is computed with VADER on the full scene text. Each edge's `avg_sentiment` is the mean compound score across all scenes where the pair co-appears in the window.
 
 **Structural balance** (`src/analysis.py`) counts triangles whose three edge signs multiply to +1 (balanced: friends of friends are friends; enemies of enemies are friends) and divides by total triangle count.
+
+**RQ metrics** (RQ1 Giant Component fractions, RQ2 power-law γ + assortativity, RQ3 Louvain communities + Heider triad census) are computed inline during the pipeline run and written to the same `outputs/metrics.csv`. All analysis functions live in `src/analysis.py`. Requires `numpy` and `scipy` (see `requirements.txt`).

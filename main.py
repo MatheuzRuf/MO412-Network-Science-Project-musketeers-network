@@ -45,7 +45,11 @@ from src.chapter_parser import split_into_chapters, save_chapters, load_chapters
 from src.characters     import extract_characters, get_character_names
 from src.scenes         import extract_scenes
 from src.graph_builder  import build_graph
-from src.analysis       import compute_metrics, balance_ratio
+from src.analysis       import (
+    compute_metrics, balance_ratio,
+    giant_component_fractions, power_law_exponent,
+    assortativity_metrics, louvain_metrics, triad_type_census,
+)
 from src.export         import save_graph, save_metrics
 
 # ---------------------------------------------------------------------------
@@ -121,6 +125,9 @@ def process_book(book_key: str, filename: str) -> list[dict]:
 
         metrics = compute_metrics(G)
         balance = balance_ratio(G)
+        rq1     = giant_component_fractions(G)
+        rq2     = {"gamma": power_law_exponent(G), **assortativity_metrics(G)}
+        rq3     = {**louvain_metrics(G), **triad_type_census(G)}
         record  = {
             "window":   win_id,
             "book":     book_key,
@@ -128,6 +135,9 @@ def process_book(book_key: str, filename: str) -> list[dict]:
             "last_ch":  last_ch,
             **metrics,
             "balance":  round(balance, 4),
+            **rq1,
+            **rq2,
+            **rq3,
         }
         metrics_records.append(record)
         logger.info(
