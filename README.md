@@ -1,4 +1,10 @@
 # Three Musketeers Trilogy — Signed Character-Interaction Networks
+Project for: MO412, Intitute of Computing, UNICAMP
+
+By: Matheus Rufino da Silva 221756
+Arimã da Silva Alves Batista 194347
+
+Prof.: João Meidanis
 
 A dynamic, signed social-network analysis of Alexandre Dumas's complete *Three Musketeers* trilogy (six books, ~2.5 million words). The pipeline extracts characters from plain text, co-locates them inside rolling scene windows, scores each relationship with VADER sentiment, and produces a time-evolving signed graph suitable for Gephi or further network analysis.
 
