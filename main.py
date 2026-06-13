@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 from src.config import (
     BOOKS,
     RAW_DIR, CLEAN_DIR, CHAPTERS_DIR,
-    GRAPHS_DIR, METRICS_CSV,
+    GRAPHS_DIR, PLOTS_DIR, METRICS_CSV,
 )
 from src.preprocessing  import load_raw, clean_text, save_clean
 from src.chapter_parser import split_into_chapters, save_chapters, load_chapters
@@ -49,6 +49,10 @@ from src.analysis       import (
     compute_metrics, balance_ratio,
     giant_component_fractions, power_law_exponent,
     assortativity_metrics, louvain_metrics, triad_type_census,
+    centrality_metrics, network_diameter,
+    plot_community_graph, plot_centrality_ranking,
+    plot_degree_distribution, plot_sentiment_heatmap,
+    plot_ego_network, plot_metrics_over_time,
 )
 from src.export         import save_graph, save_metrics
 
@@ -135,6 +139,7 @@ def process_book(book_key: str, filename: str) -> list[dict]:
             "last_ch":  last_ch,
             **metrics,
             "balance":  round(balance, 4),
+            "diameter": network_diameter(G),
             **rq1,
             **rq2,
             **rq3,
@@ -147,6 +152,62 @@ def process_book(book_key: str, filename: str) -> list[dict]:
         )
 
     logger.info("Book %s done: %d windows with graphs", book_key, len(metrics_records))
+
+    # ── Summary plots for the final window of this book ───────────────────
+    if metrics_records:
+        last_rec = metrics_records[-1]
+        last_graph_path = GRAPHS_DIR / f"{last_rec['window']}.graphml"
+        if last_graph_path.exists():
+            try:
+                import networkx as _nx
+                G_plot = _nx.read_graphml(str(last_graph_path))
+                # Normalise attribute types after GraphML round-trip
+                for u, v, d in G_plot.edges(data=True):
+                    if "sign" in d:
+                        G_plot[u][v]["sign"] = int(float(d["sign"]))
+                    if "avg_sentiment" in d:
+                        G_plot[u][v]["avg_sentiment"] = float(d["avg_sentiment"])
+                    if "weight" in d:
+                        G_plot[u][v]["weight"] = float(d["weight"])
+
+                book_title = book_key.replace("_", " ").title()
+                pdir = PLOTS_DIR / book_key
+
+                plot_community_graph(
+                    G_plot,
+                    title=f"{book_title} — Community Graph",
+                    output_path=pdir / "community_graph.png",
+                )
+                for met in ("betweenness", "pagerank", "degree"):
+                    plot_centrality_ranking(
+                        G_plot,
+                        title=f"{book_title} — Top Characters by {met.capitalize()}",
+                        output_path=pdir / f"centrality_{met}.png",
+                        metric=met,
+                    )
+                plot_degree_distribution(
+                    G_plot,
+                    title=f"{book_title} — Degree Distribution",
+                    output_path=pdir / "degree_distribution.png",
+                )
+                plot_sentiment_heatmap(
+                    G_plot,
+                    title=f"{book_title} — Sentiment Heatmap",
+                    output_path=pdir / "sentiment_heatmap.png",
+                )
+                cent = centrality_metrics(G_plot)
+                if cent.get("betweenness"):
+                    top_char = cent["betweenness"][0][0]
+                    plot_ego_network(
+                        G_plot,
+                        character=top_char,
+                        title=f"{book_title} — Ego Network: {top_char}",
+                        output_path=pdir / f"ego_{top_char.replace(' ', '_').lower()}.png",
+                    )
+                logger.info("Saved summary plots for %s → %s", book_key, pdir)
+            except Exception as exc:
+                logger.warning("Could not generate plots for %s: %s", book_key, exc)
+
     return metrics_records
 
 
@@ -168,6 +229,10 @@ def main() -> None:
         save_metrics(records)
 
     logger.info("Done. %d windows generated across all books.", len(all_records))
+
+    if all_records:
+        plot_metrics_over_time(all_records, PLOTS_DIR)
+        logger.info("Saved time-series metrics chart → %s", PLOTS_DIR / "metrics_over_time.png")
 
 
 if __name__ == "__main__":

@@ -470,3 +470,106 @@ A signed triangle is **balanced** if its three edge-sign product = +1:
 - **+−− (6.9 %)**: the classical Heider balance configuration ("the enemy of my enemy is my friend") is present but rarer than all-positive triads.
 - **++− (12.4 %)**: unbalanced triads where two friends share a mutual enemy are the main source of tension — these represent the narrative pressure points (e.g., Athos and Porthos both friendly to Louis but Porthos antagonised by Colbert's faction).
 - **−−− (2.1 %)**: three mutual enemies almost never close into a triangle, as Heider's theory predicts — such configurations are socially unstable and dissolve.
+
+---
+
+## Centrality & Network Diameter
+
+The following centrality measures are computed on each window's graph and surfaced for the final window of every book.
+
+### Centrality metrics computed
+
+| Metric | Definition | Interpretation in this corpus |
+|--------|-----------|-------------------------------|
+| **Degree centrality** | Normalised fraction of nodes a character is connected to | Raw social reach — how many distinct characters someone interacts with |
+| **Betweenness centrality** | Fraction of shortest paths that pass through a node | Narrative brokers — characters who bridge factions or storylines |
+| **Closeness centrality** | Inverse mean shortest path to all other nodes | How quickly information/events propagate from a character |
+| **PageRank** | Eigenvector-style random walk with damping | Prestige — weighted by the importance of a character's connections |
+| **Eigenvector centrality** | Centrality proportional to the centrality of neighbours | Influence within the core — proximity to other highly central characters |
+
+Betweenness and PageRank are weighted by `weight` (co-occurrence count); closeness uses the unweighted topology.
+
+### Network diameter
+
+The diameter is computed on the **largest connected component** (GCC) of each window.
+
+| Book | Min diameter | Max diameter | Typical diameter |
+|------|:----------:|:----------:|:---------------:|
+| *The Three Musketeers* | 2 | 4 | 3 |
+| *Twenty Years After* | 2 | 4 | 3 |
+| *The Vicomte de Bragelonne* | 2 | 5 | 3–4 |
+| *Ten Years Later* | 2 | 4 | 3 |
+| *Louise de la Vallière* | 2 | 5 | 3 |
+| *The Man in the Iron Mask* | 2 | 4 | 3 |
+
+The consistently small diameter (2–4) confirms the **small-world property**: any two characters in the network are separated by at most 3–4 intermediaries, consistent with the disassortative star topology observed in RQ2.
+
+### Top characters by betweenness centrality (per book, final window)
+
+Betweenness is the most narratively meaningful centrality: it identifies characters who **bridge** the major factions, without whom the network would fragment.
+
+| Book | Rank 1 | Rank 2 | Rank 3 |
+|------|--------|--------|--------|
+| *The Three Musketeers* | **Athos** | d'Artagnan | Aramis |
+| *Twenty Years After* | **Athos** | Charles II | Aramis |
+| *The Vicomte de Bragelonne* | **Louis XIV** | Athos | Charles II |
+| *Ten Years Later* | **Louis XIV** | Guiche | Raoul |
+| *Louise de la Vallière* | **Louis XIV** | Raoul | Louise de la Vallière |
+| *The Man in the Iron Mask* | **Louis XIV** | Aramis | Fouquet |
+
+The structural role shift from **Athos** (books 1–2) to **Louis XIV** (books 3–6) mirrors the narrative's shift from musketeer adventure to court political drama.
+
+---
+
+## Visualisations
+
+Running `python main.py` saves all plots to `outputs/plots/`. The full set of outputs per book, plus one cross-book time-series, are described below.
+
+### Per-book plots (`outputs/plots/<book>/`)
+
+#### `community_graph.png` — Spring-layout community graph
+
+Each node is coloured by its **Louvain community**; size is proportional to degree. Edges are coloured green (positive), red (negative), or grey (neutral) by sign. Only the top-15 highest-degree characters are labelled.
+
+This is the primary graph visualisation: it shows both the **community structure** and the **sentiment polarity** of each relationship at a glance.
+
+#### `centrality_betweenness.png` / `centrality_pagerank.png` / `centrality_degree.png` — Centrality bar charts
+
+Horizontal bar charts of the top-15 characters ranked by the named centrality metric. Each bar is coloured by the character's **mean incident edge sentiment** (green = positive, red = negative, grey = neutral), so the ranking and the relational tone can be read together.
+
+Three metrics are plotted separately because they answer different questions:
+- **Betweenness** → narrative bridges / gatekeepers
+- **PageRank** → prestigious characters (well-connected to other well-connected characters)
+- **Degree** → raw social reach
+
+#### `degree_distribution.png` — Log-log degree distribution
+
+Empirical P(k) scatter on log-log axes with a **power-law fit line** overlaid (γ estimated by MLE, printed in the legend). Confirms or refutes scale-free behaviour visually for each book.
+
+#### `sentiment_heatmap.png` — Character-pair sentiment heatmap
+
+Colour-coded matrix (RdYlGn, −1 → +1) showing `avg_sentiment` for every edge between the top-25 highest-degree characters. Masked (white) cells mean no direct edge exists. This makes it easy to spot:
+- The **warm core** of mutual friends (bright green block in the musketeer novels)
+- **Cold periphery** relationships (red/yellow diagonal bands in book 6)
+- **Asymmetric subgraphs** where sentiment differs sharply depending on which faction a character sits in
+
+#### `ego_<character>.png` — Ego network
+
+2-hop ego network centred on the **highest betweenness character** of each book. The ego node is highlighted in red; alters are blue; edge colours encode sign. Node size grows with degree. Useful for reading the **local alliance structure** around the most pivotal character.
+
+---
+
+### Cross-book time series (`outputs/plots/metrics_over_time.png`)
+
+A 3×2 multi-panel chart with one coloured line per book, plotting six metrics over each book's sliding-window timeline:
+
+| Panel | Metric | What it shows |
+|-------|--------|--------------|
+| Top-left | **Nodes** | Cast size per window — peaks when new characters enter |
+| Top-right | **Edges** | Interaction density — spikes in action-heavy arcs |
+| Mid-left | **Density** | Cohesion — how tightly the cast is interconnected |
+| Mid-right | **Avg Sentiment** | Emotional tone over time — dips mark crisis arcs |
+| Bot-left | **Balance Ratio** | Structural balance — falls when conflict destabilises triads |
+| Bot-right | **# Communities** | Faction count — rises during civil-war / conspiratorial arcs |
+
+Each panel's x-axis is the **window index within that book** (not absolute chapter number), so the curves are comparable across books of different lengths.

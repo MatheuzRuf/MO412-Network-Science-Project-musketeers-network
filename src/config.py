@@ -18,6 +18,7 @@ SCENES_DIR     = CACHE_DIR / "scenes"
 
 OUTPUTS_DIR = BASE_DIR / "outputs"
 GRAPHS_DIR  = OUTPUTS_DIR / "graphs"
+PLOTS_DIR   = OUTPUTS_DIR / "plots"
 METRICS_CSV = OUTPUTS_DIR / "metrics.csv"
 
 # ---------------------------------------------------------------------------
