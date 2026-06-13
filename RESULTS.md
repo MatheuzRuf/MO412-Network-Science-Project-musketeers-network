@@ -109,6 +109,30 @@ The narrative opens at moderate tension (~0.49), plunges in **windows 10–14** 
  start   siege/Milady  triumph  execution
 ```
 
+#### Visualisations
+
+**Community graph** — Louvain communities · node size ∝ degree · edge colour = sentiment sign
+
+![Community graph — Book 1](outputs/plots/book_1/community_graph.png)
+
+**Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
+
+![Sentiment heatmap — Book 1](outputs/plots/book_1/sentiment_heatmap.png)
+
+**Ego network — Richelieu** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+
+![Ego network — Richelieu](outputs/plots/book_1/ego_richelieu.png)
+
+**Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
+
+| Betweenness | PageRank | Degree |
+|:---:|:---:|:---:|
+| ![Betweenness — Book 1](outputs/plots/book_1/centrality_betweenness.png) | ![PageRank — Book 1](outputs/plots/book_1/centrality_pagerank.png) | ![Degree — Book 1](outputs/plots/book_1/centrality_degree.png) |
+
+**Degree distribution** — log-log P(k) · red dashed = power-law fit
+
+![Degree distribution — Book 1](outputs/plots/book_1/degree_distribution.png)
+
 ---
 
 ### Book 2 — *Twenty Years After* (1845)
@@ -159,6 +183,30 @@ Book 2 opens positively (0.59–0.86, **windows 1–10**) — the joyful reunion
 reunion  execution/Mordaunt  Fronde  close
 ```
 
+#### Visualisations
+
+**Community graph** — Louvain communities · node size ∝ degree · edge colour = sentiment sign
+
+![Community graph — Book 2](outputs/plots/book_2/community_graph.png)
+
+**Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
+
+![Sentiment heatmap — Book 2](outputs/plots/book_2/sentiment_heatmap.png)
+
+**Ego network — Beaufort** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+
+![Ego network — Beaufort](outputs/plots/book_2/ego_beaufort.png)
+
+**Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
+
+| Betweenness | PageRank | Degree |
+|:---:|:---:|:---:|
+| ![Betweenness — Book 2](outputs/plots/book_2/centrality_betweenness.png) | ![PageRank — Book 2](outputs/plots/book_2/centrality_pagerank.png) | ![Degree — Book 2](outputs/plots/book_2/centrality_degree.png) |
+
+**Degree distribution** — log-log P(k) · red dashed = power-law fit
+
+![Degree distribution — Book 2](outputs/plots/book_2/degree_distribution.png)
+
 ---
 
 ### Book 3 — *The Vicomte de Bragelonne* (1847)
@@ -207,6 +255,30 @@ This is the most **consistently positive** book of the early trilogy (minimum 0.
 0.72 ──► 0.88 ──▼── 0.28 ──▲── 0.89
 opening  Restoration dip  Mazarin dead
 ```
+
+#### Visualisations
+
+**Community graph** — Louvain communities · node size ∝ degree · edge colour = sentiment sign
+
+![Community graph — Book 3](outputs/plots/book_3/community_graph.png)
+
+**Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
+
+![Sentiment heatmap — Book 3](outputs/plots/book_3/sentiment_heatmap.png)
+
+**Ego network — Boulingrin** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+
+![Ego network — Boulingrin](outputs/plots/book_3/ego_boulingrin.png)
+
+**Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
+
+| Betweenness | PageRank | Degree |
+|:---:|:---:|:---:|
+| ![Betweenness — Book 3](outputs/plots/book_3/centrality_betweenness.png) | ![PageRank — Book 3](outputs/plots/book_3/centrality_pagerank.png) | ![Degree — Book 3](outputs/plots/book_3/centrality_degree.png) |
+
+**Degree distribution** — log-log P(k) · red dashed = power-law fit
+
+![Degree distribution — Book 3](outputs/plots/book_3/degree_distribution.png)
 
 ---
 
@@ -257,6 +329,30 @@ This is the most positive book in the series. It opens high (~0.75–0.87) durin
  opening  Philip/Wardes  court festival
 ```
 
+#### Visualisations
+
+**Community graph** — Louvain communities · node size ∝ degree · edge colour = sentiment sign
+
+![Community graph — Book 4](outputs/plots/book_4/community_graph.png)
+
+**Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
+
+![Sentiment heatmap — Book 4](outputs/plots/book_4/sentiment_heatmap.png)
+
+**Ego network — Loret** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+
+![Ego network — Loret](outputs/plots/book_4/ego_loret.png)
+
+**Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
+
+| Betweenness | PageRank | Degree |
+|:---:|:---:|:---:|
+| ![Betweenness — Book 4](outputs/plots/book_4/centrality_betweenness.png) | ![PageRank — Book 4](outputs/plots/book_4/centrality_pagerank.png) | ![Degree — Book 4](outputs/plots/book_4/centrality_degree.png) |
+
+**Degree distribution** — log-log P(k) · red dashed = power-law fit
+
+![Degree distribution — Book 4](outputs/plots/book_4/degree_distribution.png)
+
 ---
 
 ### Book 5 — *Louise de la Vallière* (1848)
@@ -304,6 +400,30 @@ Starts warmly (~0.68–0.86, windows 1–10), dips to its lowest at **window 23*
 0.86 ──▼── 0.40 ──▲── 0.80 ──▼── 0.43
  opening  Raoul/betrayal  court revival  Raoul leaves
 ```
+
+#### Visualisations
+
+**Community graph** — Louvain communities · node size ∝ degree · edge colour = sentiment sign
+
+![Community graph — Book 5](outputs/plots/book_5/community_graph.png)
+
+**Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
+
+![Sentiment heatmap — Book 5](outputs/plots/book_5/sentiment_heatmap.png)
+
+**Ego network — Fouquet** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+
+![Ego network — Fouquet](outputs/plots/book_5/ego_fouquet.png)
+
+**Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
+
+| Betweenness | PageRank | Degree |
+|:---:|:---:|:---:|
+| ![Betweenness — Book 5](outputs/plots/book_5/centrality_betweenness.png) | ![PageRank — Book 5](outputs/plots/book_5/centrality_pagerank.png) | ![Degree — Book 5](outputs/plots/book_5/centrality_degree.png) |
+
+**Degree distribution** — log-log P(k) · red dashed = power-law fit
+
+![Degree distribution — Book 5](outputs/plots/book_5/degree_distribution.png)
 
 ---
 
@@ -357,6 +477,30 @@ The sharpest and longest decline in the trilogy. After a warm opening (**0.68–
 ```
 
 The absolute minimum, **−0.116** at window 43, corresponds to the chapters covering Porthos's death in the Locmaria cave and Aramis's desperate flight.
+
+#### Visualisations
+
+**Community graph** — Louvain communities · node size ∝ degree · edge colour = sentiment sign
+
+![Community graph — Book 6](outputs/plots/book_6/community_graph.png)
+
+**Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
+
+![Sentiment heatmap — Book 6](outputs/plots/book_6/sentiment_heatmap.png)
+
+**Ego network — Grimaud** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+
+![Ego network — Grimaud](outputs/plots/book_6/ego_grimaud.png)
+
+**Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
+
+| Betweenness | PageRank | Degree |
+|:---:|:---:|:---:|
+| ![Betweenness — Book 6](outputs/plots/book_6/centrality_betweenness.png) | ![PageRank — Book 6](outputs/plots/book_6/centrality_pagerank.png) | ![Degree — Book 6](outputs/plots/book_6/centrality_degree.png) |
+
+**Degree distribution** — log-log P(k) · red dashed = power-law fit
+
+![Degree distribution — Book 6](outputs/plots/book_6/degree_distribution.png)
 
 ---
 
@@ -519,57 +663,130 @@ Betweenness is the most narratively meaningful centrality: it identifies charact
 
 The structural role shift from **Athos** (books 1–2) to **Louis XIV** (books 3–6) mirrors the narrative's shift from musketeer adventure to court political drama.
 
+### Analysis
+
+#### Centrality across the trilogy
+
+The five centrality measures tell consistent but complementary stories:
+
+**Degree vs. betweenness divergence.** In the final window of each book the character with the highest *degree* (most co-occurrence partners) is not always the same as the highest *betweenness* (best bridge between factions). This divergence is narratively meaningful: Louis XIV saturates Book 4's degree ranking because nearly every court scene includes him, but in the *final* window of Book 1 Richelieu tops betweenness — meaning the last chapters hinge on him as a structural pivot between the Musketeers' world and the court's, even though his total co-occurrence count is lower than Athos or Aramis.
+
+**PageRank as prestige indicator.** PageRank is high for characters who interact with other well-connected characters. In Books 1–2 the four musketeers form a tight prestige cluster — each boosts the others' scores. From Book 3 onwards Louis XIV's PageRank detaches from the musketeers': he is connected to everyone of importance (Fouquet, Colbert, Mazarin, the queen, the nobles), whereas the musketeers' network contracts around a smaller inner circle.
+
+**Eigenvector centrality and the core.** Eigenvector centrality is the most conservative measure — it rewards being embedded deep inside the densest, most mutually-connected subgraph. In every book this highlights the four musketeers' inner clique (Books 1–2) or the Louis–Fouquet–Colbert triumvirate (Books 4–6). Characters like d'Artagnan, who bridges many factions but lives at their periphery, score lower here than on betweenness — illustrating the distinction between *brokers* and *core members*.
+
+**Closeness and narrative pacing.** Closeness centrality (how quickly a node can reach any other) tracks well with narrative agency: characters with high closeness are those whose actions have immediate ripple effects across the cast. In Book 6, closeness scores compress — the network has fewer nodes, and Aramis's and Louis's short paths to every other character reflect the plot's funnel: all storylines converge on the Iron Mask crisis.
+
+#### Network diameter and small-world structure
+
+The diameter never exceeds 5 across any of the 370 windows, and typically sits at 3. This is remarkably compact given casts of 20–40 characters per window. Three structural mechanisms maintain this:
+
+1. **Hub characters** (Athos/d'Artagnan in Books 1–2, Louis XIV in Books 3–6) act as universal connectors — almost any pair of characters can be linked via one of them.
+2. **Servant–valet links** (Grimaud, Planchet, Mousqueton, Bazin) provide short paths between faction leaders who would otherwise be far apart.
+3. **Sliding-window construction**: because each window covers 10 consecutive chapters, transient co-occurrences create short-cut edges that would vanish in a static whole-book graph.
+
+The slight diameter increase in Books 3 and 5 (max = 5 vs. 4 elsewhere) coincides with the books' more episodic structure, where subplot threads (the English Restoration, the Louise affair) run in parallel for stretches before reconnecting.
+
+#### What the ego networks reveal
+
+The top-betweenness character in each book's final window — Richelieu (B1), Beaufort (B2), Boulingrin (B3), Loret (B4), Fouquet (B5), Grimaud (B6) — is *not* the most famous character of each book. This is intentional and informative: betweenness in the *final window* captures who is structurally central at the narrative's close, which is often a secondary character acting as a hinge between resolved plotlines and newly introduced tensions.
+
+- **Richelieu in Book 1's last window**: the Cardinal's trial and execution of Milady, and his final confrontation with d'Artagnan, make him the link between the Musketeers' world, the royal court, and Milady's network — a true bridge in the climactic chapters.
+- **Beaufort in Book 2**: the Duke de Beaufort leads the Fronde and acts as a pivot between the Parisian rebel factions and the Mazarin loyalists in the closing chapters.
+- **Grimaud in Book 6**: Athos's silent servant outlives his master and appears in scenes that connect Athos's grief arc, Raoul's death report, and the remaining musketeer fragments — a poignant final bridge character.
+
+The ego network plots make these bridge roles visible: the ego node sits at the intersection of two or more otherwise loosely connected clusters, with a mix of green (positive) and red (negative) edges radiating outward.
+
+#### Sentiment heatmaps and community structure
+
+Reading the heatmaps alongside the community graphs reveals a consistent pattern: **within-community edges are almost exclusively green** (positive sentiment), while **cross-community edges are the primary location of red/yellow (negative or neutral) ties**. This is precisely what Heider's structural balance theory predicts — and is visible in every book:
+
+- Books 1–2: the Musketeer–royalist community is an all-green block; edges crossing into Richelieu's or Mazarin's community show yellow-to-red tones.
+- Book 4: the warmest heatmap in the corpus — the court circle forms one almost uniformly green community; hostility is confined to a small cluster of rival nobles (Philip/Maria Theresa, Wardes/Grammont).
+- Book 6: the heatmap's overall colour cools dramatically — even within the Aramis–Fouquet community, edges carry lower positive scores, reflecting the anxiety and betrayal of the Iron Mask plot.
+
+#### Time-series dynamics
+
+The `metrics_over_time.png` panel reveals three macro-level patterns across the six books:
+
+1. **Cast size (nodes) is stable within books but drops at transitions.** Each book's opening windows have slightly more nodes as new characters are introduced; windows near the end thin out as plot threads close. The sharpest drop is between Book 3 and Book 4 as the Restoration subplot cast (Monk, Lambert, English nobles) disappears.
+
+2. **Density and balance move together.** Windows with high density (more edges per node) almost always have higher balance ratios — denser co-occurrence means more triangles, and more triangles in a predominantly positive network tilts toward the balanced +++ type. The negative correlation between density and negative-edge fraction is consistent across all books.
+
+3. **Community count spikes predict plot crises.** The `n_communities` panel shows sharp upward spikes at known crisis points: the Fronde's opening (Book 2, windows 18–22), the Iron Mask discovery (Book 6, windows 8–12), and Fouquet's arrest (Book 6, windows 30–35). Faction count rising above 3 indicates the narrative has temporarily fragmented into parallel, loosely-connected threads — a reliable structural signature of conflict escalation.
+
 ---
 
 ## Visualisations
 
-Running `python main.py` saves all plots to `outputs/plots/`. The full set of outputs per book, plus one cross-book time-series, are described below.
+All plots are generated by running `python main.py` and saved to `outputs/plots/`. Per-book visualisations are embedded inline in each book's section above. The cross-book time-series panel is shown below.
 
-### Per-book plots (`outputs/plots/<book>/`)
+### Cross-book metrics over time
 
-#### `community_graph.png` — Spring-layout community graph
+A 3×2 multi-panel chart with one coloured line per book. Panels (left→right, top→bottom): **Nodes**, **Edges**, **Density**, **Avg Sentiment**, **Balance Ratio**, **# Communities**. The x-axis is the window index within each book.
 
-Each node is coloured by its **Louvain community**; size is proportional to degree. Edges are coloured green (positive), red (negative), or grey (neutral) by sign. Only the top-15 highest-degree characters are labelled.
+![Metrics over time — all books](outputs/plots/metrics_over_time.png)
 
-This is the primary graph visualisation: it shows both the **community structure** and the **sentiment polarity** of each relationship at a glance.
+### Cross-book gallery
 
-#### `centrality_betweenness.png` / `centrality_pagerank.png` / `centrality_degree.png` — Centrality bar charts
+The tables below allow direct visual comparison of each plot type across all six books.
 
-Horizontal bar charts of the top-15 characters ranked by the named centrality metric. Each bar is coloured by the character's **mean incident edge sentiment** (green = positive, red = negative, grey = neutral), so the ranking and the relational tone can be read together.
+#### Community graphs
 
-Three metrics are plotted separately because they answer different questions:
-- **Betweenness** → narrative bridges / gatekeepers
-- **PageRank** → prestigious characters (well-connected to other well-connected characters)
-- **Degree** → raw social reach
+| Book 1 — *Three Musketeers* | Book 2 — *Twenty Years After* | Book 3 — *Vicomte de Bragelonne* |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_1/community_graph.png) | ![](outputs/plots/book_2/community_graph.png) | ![](outputs/plots/book_3/community_graph.png) |
 
-#### `degree_distribution.png` — Log-log degree distribution
+| Book 4 — *Ten Years Later* | Book 5 — *Louise de la Vallière* | Book 6 — *The Man in the Iron Mask* |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_4/community_graph.png) | ![](outputs/plots/book_5/community_graph.png) | ![](outputs/plots/book_6/community_graph.png) |
 
-Empirical P(k) scatter on log-log axes with a **power-law fit line** overlaid (γ estimated by MLE, printed in the legend). Confirms or refutes scale-free behaviour visually for each book.
+#### Sentiment heatmaps
 
-#### `sentiment_heatmap.png` — Character-pair sentiment heatmap
+| Book 1 | Book 2 | Book 3 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_1/sentiment_heatmap.png) | ![](outputs/plots/book_2/sentiment_heatmap.png) | ![](outputs/plots/book_3/sentiment_heatmap.png) |
 
-Colour-coded matrix (RdYlGn, −1 → +1) showing `avg_sentiment` for every edge between the top-25 highest-degree characters. Masked (white) cells mean no direct edge exists. This makes it easy to spot:
-- The **warm core** of mutual friends (bright green block in the musketeer novels)
-- **Cold periphery** relationships (red/yellow diagonal bands in book 6)
-- **Asymmetric subgraphs** where sentiment differs sharply depending on which faction a character sits in
+| Book 4 | Book 5 | Book 6 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_4/sentiment_heatmap.png) | ![](outputs/plots/book_5/sentiment_heatmap.png) | ![](outputs/plots/book_6/sentiment_heatmap.png) |
 
-#### `ego_<character>.png` — Ego network
+#### Betweenness centrality rankings
 
-2-hop ego network centred on the **highest betweenness character** of each book. The ego node is highlighted in red; alters are blue; edge colours encode sign. Node size grows with degree. Useful for reading the **local alliance structure** around the most pivotal character.
+| Book 1 | Book 2 | Book 3 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_1/centrality_betweenness.png) | ![](outputs/plots/book_2/centrality_betweenness.png) | ![](outputs/plots/book_3/centrality_betweenness.png) |
 
----
+| Book 4 | Book 5 | Book 6 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_4/centrality_betweenness.png) | ![](outputs/plots/book_5/centrality_betweenness.png) | ![](outputs/plots/book_6/centrality_betweenness.png) |
 
-### Cross-book time series (`outputs/plots/metrics_over_time.png`)
+#### PageRank centrality rankings
 
-A 3×2 multi-panel chart with one coloured line per book, plotting six metrics over each book's sliding-window timeline:
+| Book 1 | Book 2 | Book 3 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_1/centrality_pagerank.png) | ![](outputs/plots/book_2/centrality_pagerank.png) | ![](outputs/plots/book_3/centrality_pagerank.png) |
 
-| Panel | Metric | What it shows |
-|-------|--------|--------------|
-| Top-left | **Nodes** | Cast size per window — peaks when new characters enter |
-| Top-right | **Edges** | Interaction density — spikes in action-heavy arcs |
-| Mid-left | **Density** | Cohesion — how tightly the cast is interconnected |
-| Mid-right | **Avg Sentiment** | Emotional tone over time — dips mark crisis arcs |
-| Bot-left | **Balance Ratio** | Structural balance — falls when conflict destabilises triads |
-| Bot-right | **# Communities** | Faction count — rises during civil-war / conspiratorial arcs |
+| Book 4 | Book 5 | Book 6 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_4/centrality_pagerank.png) | ![](outputs/plots/book_5/centrality_pagerank.png) | ![](outputs/plots/book_6/centrality_pagerank.png) |
 
-Each panel's x-axis is the **window index within that book** (not absolute chapter number), so the curves are comparable across books of different lengths.
+#### Degree distributions
+
+| Book 1 | Book 2 | Book 3 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_1/degree_distribution.png) | ![](outputs/plots/book_2/degree_distribution.png) | ![](outputs/plots/book_3/degree_distribution.png) |
+
+| Book 4 | Book 5 | Book 6 |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_4/degree_distribution.png) | ![](outputs/plots/book_5/degree_distribution.png) | ![](outputs/plots/book_6/degree_distribution.png) |
+
+#### Ego networks
+
+| Book 1 — Richelieu | Book 2 — Beaufort | Book 3 — Boulingrin |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_1/ego_richelieu.png) | ![](outputs/plots/book_2/ego_beaufort.png) | ![](outputs/plots/book_3/ego_boulingrin.png) |
+
+| Book 4 — Loret | Book 5 — Fouquet | Book 6 — Grimaud |
+|:---:|:---:|:---:|
+| ![](outputs/plots/book_4/ego_loret.png) | ![](outputs/plots/book_5/ego_fouquet.png) | ![](outputs/plots/book_6/ego_grimaud.png) |
