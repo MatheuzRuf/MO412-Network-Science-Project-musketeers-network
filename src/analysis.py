@@ -220,7 +220,7 @@ def centrality_metrics(G: nx.Graph) -> dict:
     Compute per-node centrality scores.
 
     Returns a dict: metric_name → list of (node, score) sorted descending.
-    Metrics: degree, betweenness, closeness, pagerank, eigenvector.
+    Metrics: degree, betweenness, closeness, eigenvector.
     """
     if G.number_of_nodes() < 2:
         return {}
@@ -232,15 +232,6 @@ def centrality_metrics(G: nx.Graph) -> dict:
         close_c = nx.closeness_centrality(G)
     except Exception:
         close_c = {n: 0.0 for n in G.nodes()}
-
-    try:
-        pr = nx.pagerank(G, weight="weight")
-    except Exception:
-        try:
-            pr = nx.pagerank(G)
-        except Exception:
-            n_nodes = G.number_of_nodes()
-            pr = {node: 1.0 / n_nodes for node in G.nodes()}
 
     try:
         eig_c = nx.eigenvector_centrality_numpy(G, weight="weight")
@@ -257,7 +248,6 @@ def centrality_metrics(G: nx.Graph) -> dict:
         "degree":      _sorted_items(degree_c),
         "betweenness": _sorted_items(between_c),
         "closeness":   _sorted_items(close_c),
-        "pagerank":    _sorted_items(pr),
         "eigenvector": _sorted_items(eig_c),
     }
 
@@ -382,7 +372,14 @@ def plot_community_graph(
     pos = nx.spring_layout(G, weight="weight", seed=seed, k=1.5)
     label_set = set(sorted(degrees, key=lambda n: degrees[n], reverse=True)[:top_n_labels])
 
-    fig, ax = plt.subplots(figsize=(14, 10))
+    # Create a figure with a main axes for the graph and a side panel for
+    # community summaries (top members). This helps readers interpret
+    # each coloured community without inspecting tiny labels.
+    fig = plt.figure(figsize=(16, 10))
+    ax = fig.add_axes([0.02, 0.02, 0.68, 0.96])  # main graph area
+    ax_text = fig.add_axes([0.72, 0.02, 0.26, 0.96])  # right-hand summary
+    ax_text.axis("off")
+
     nx.draw_networkx_edges(G, pos, ax=ax, edge_color=edge_colors,
                            width=edge_widths, alpha=0.55)
     nx.draw_networkx_nodes(G, pos, ax=ax, node_color=node_colors,
@@ -400,11 +397,29 @@ def plot_community_graph(
         mpatches.Patch(facecolor="#F44336", label="Negative edge"),
         mpatches.Patch(facecolor="#9E9E9E", label="Neutral edge"),
     ]
+
+    # Legend on the graph axes for concise keys
     ax.legend(handles=sign_handles + comm_handles,
-              fontsize=7, loc="upper left", framealpha=0.7, ncol=2)
+              fontsize=7, loc="upper left", framealpha=0.7, ncol=1)
     ax.set_title(title, fontsize=14, fontweight="bold", pad=12)
     ax.axis("off")
-    fig.tight_layout()
+
+    # Community summaries: top members by internal weighted-degree
+    summary_lines = []
+    for i, comm in enumerate(partition):
+        sub = G.subgraph(comm)
+        degs = sorted(sub.degree(weight="weight"), key=lambda x: x[1], reverse=True)
+        top_names = [n for n, _ in degs[:5]]
+        if not top_names:
+            top_text = "(no members)"
+        else:
+            top_text = ", ".join(top_names)
+        summary_lines.append(f"Community {i+1} ({len(comm)} nodes): {top_text}")
+
+    summary_text = "\n\n".join(summary_lines)
+    ax_text.text(0, 1, "Communities (top members):\n\n" + summary_text,
+                 fontsize=9, va="top", ha="left", wrap=True)
+
     fig.savefig(str(output_path), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -423,7 +438,7 @@ def plot_centrality_ranking(
     Horizontal bar chart of the top-*top_n* characters ranked by *metric*
     centrality.  Bar colour reflects that character's mean edge sentiment.
 
-    metric: 'degree' | 'betweenness' | 'closeness' | 'pagerank' | 'eigenvector'
+    metric: 'degree' | 'betweenness' | 'closeness' | 'eigenvector'
     """
     if G.number_of_nodes() < 2:
         return
@@ -585,7 +600,7 @@ def plot_ego_network(
                    for n in ego.nodes()]
     edges = list(ego.edges(data=True))
     edge_colors = _edge_sign_colors(ego, edges)
-    edge_widths  = [1.0 + ego[u][v].get("weight", 1) * 0.3 for u, v, _ in edges]
+    edge_widths = [0.4 + math.log1p(ego[u][v].get("weight", 1)) * 0.4 for u, v, _ in edges]
 
     pos = nx.spring_layout(ego, weight="weight", seed=seed, k=2.0)
 

@@ -115,6 +115,11 @@ The narrative opens at moderate tension (~0.49), plunges in **windows 10–14** 
 
 ![Community graph — Book 1](outputs/plots/book_1/community_graph.png)
 
+**Community summary (top members)** — top-5 by internal weighted degree per community:
+- Community 1 (25 nodes): Athos, Aramis, Porthos, King, Planchet
+- Community 2 (25 nodes): Louis, Richelieu, Anne, Tréville, Bonacieux
+- Community 3 (21 nodes): Milady, Felton, Winter, Charles, Buckingham
+
 **Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
 
 ![Sentiment heatmap — Book 1](outputs/plots/book_1/sentiment_heatmap.png)
@@ -125,9 +130,9 @@ The narrative opens at moderate tension (~0.49), plunges in **windows 10–14** 
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
-| Betweenness | PageRank | Degree |
-|:---:|:---:|:---:|
-| ![Betweenness — Book 1](outputs/plots/book_1/centrality_betweenness.png) | ![PageRank — Book 1](outputs/plots/book_1/centrality_pagerank.png) | ![Degree — Book 1](outputs/plots/book_1/centrality_degree.png) |
+| Betweenness | Degree |
+|:---:|:---:|
+| ![Betweenness — Book 1](outputs/plots/book_1/centrality_betweenness.png) | ![Degree — Book 1](outputs/plots/book_1/centrality_degree.png) |
 
 **Degree distribution** — log-log P(k) · red dashed = power-law fit
 
@@ -189,6 +194,12 @@ reunion  execution/Mordaunt  Fronde  close
 
 ![Community graph — Book 2](outputs/plots/book_2/community_graph.png)
 
+**Community summary (top members)** — top-5 by internal weighted degree per community:
+- Community 1 (27 nodes): Charles, Athos, Aramis, Porthos, Mordaunt
+- Community 2 (39 nodes): Raoul, Marie, Beaufort, Chevreuse, Ramee
+- Community 3 (45 nodes): Mazarin, Anne, Louis, Broussel, Conti
+- Community 4 (3 nodes): Châtillon, Flamarens, Bouillon
+
 **Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
 
 ![Sentiment heatmap — Book 2](outputs/plots/book_2/sentiment_heatmap.png)
@@ -199,9 +210,9 @@ reunion  execution/Mordaunt  Fronde  close
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
-| Betweenness | PageRank | Degree |
-|:---:|:---:|:---:|
-| ![Betweenness — Book 2](outputs/plots/book_2/centrality_betweenness.png) | ![PageRank — Book 2](outputs/plots/book_2/centrality_pagerank.png) | ![Degree — Book 2](outputs/plots/book_2/centrality_degree.png) |
+| Betweenness | Degree |
+|:---:|:---:|
+| ![Betweenness — Book 2](outputs/plots/book_2/centrality_betweenness.png) | ![Degree — Book 2](outputs/plots/book_2/centrality_degree.png) |
 
 **Degree distribution** — log-log P(k) · red dashed = power-law fit
 
@@ -262,6 +273,12 @@ opening  Restoration dip  Mazarin dead
 
 ![Community graph — Book 3](outputs/plots/book_3/community_graph.png)
 
+**Community summary (top members)** — top-5 by internal weighted degree per community:
+- Community 1 (34 nodes): Louis, Mazarin, Anne, Raoul, Bernouin
+- Community 2 (16 nodes): Agnan, Porthos, Aramis, Mousqueton, Furet
+- Community 3 (17 nodes): Fouquet, Colbert, Gourville, Pelisson, Lyodot
+- Community 4 (19 nodes): Charles, Athos, Monk, Planchet, Parry
+
 **Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
 
 ![Sentiment heatmap — Book 3](outputs/plots/book_3/sentiment_heatmap.png)
@@ -272,9 +289,9 @@ opening  Restoration dip  Mazarin dead
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
-| Betweenness | PageRank | Degree |
-|:---:|:---:|:---:|
-| ![Betweenness — Book 3](outputs/plots/book_3/centrality_betweenness.png) | ![PageRank — Book 3](outputs/plots/book_3/centrality_pagerank.png) | ![Degree — Book 3](outputs/plots/book_3/centrality_degree.png) |
+| Betweenness | Degree |
+|:---:|:---:|
+| ![Betweenness — Book 3](outputs/plots/book_3/centrality_betweenness.png) | ![Degree — Book 3](outputs/plots/book_3/centrality_degree.png) |
 
 **Degree distribution** — log-log P(k) · red dashed = power-law fit
 
@@ -335,6 +352,11 @@ This is the most positive book in the series. It opens high (~0.75–0.87) durin
 
 ![Community graph — Book 4](outputs/plots/book_4/community_graph.png)
 
+**Community summary (top members)** — top-5 by internal weighted degree per community:
+- Community 1 (15 nodes): Montalais, Vallière, Louise, Saint-Aignan, Malicorne
+- Community 2 (21 nodes): Aramis, Fouquet, Baisemeaux, Colbert, Mazarin
+- Community 3 (21 nodes): Louis, Guiche, Raoul, Buckingham, Anne
+
 **Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
 
 ![Sentiment heatmap — Book 4](outputs/plots/book_4/sentiment_heatmap.png)
@@ -345,9 +367,9 @@ This is the most positive book in the series. It opens high (~0.75–0.87) durin
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
-| Betweenness | PageRank | Degree |
-|:---:|:---:|:---:|
-| ![Betweenness — Book 4](outputs/plots/book_4/centrality_betweenness.png) | ![PageRank — Book 4](outputs/plots/book_4/centrality_pagerank.png) | ![Degree — Book 4](outputs/plots/book_4/centrality_degree.png) |
+| Betweenness | Degree |
+|:---:|:---:|
+| ![Betweenness — Book 4](outputs/plots/book_4/centrality_betweenness.png) | ![Degree — Book 4](outputs/plots/book_4/centrality_degree.png) |
 
 **Degree distribution** — log-log P(k) · red dashed = power-law fit
 
@@ -407,6 +429,12 @@ Starts warmly (~0.68–0.86, windows 1–10), dips to its lowest at **window 23*
 
 ![Community graph — Book 5](outputs/plots/book_5/community_graph.png)
 
+**Community summary (top members)** — top-5 by internal weighted degree per community:
+- Community 1 (6 nodes): Porthos, Planchet, Vallon, Truchen, Celestin
+- Community 2 (22 nodes): Louis, Vallière, Raoul, Guiche, Saint-Aignan
+- Community 3 (7 nodes): Grafton, Stewart, Buckingham, Mary, Charles
+- Community 4 (24 nodes): Fouquet, Aramis, Anne, Colbert, Vanel
+
 **Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
 
 ![Sentiment heatmap — Book 5](outputs/plots/book_5/sentiment_heatmap.png)
@@ -417,9 +445,9 @@ Starts warmly (~0.68–0.86, windows 1–10), dips to its lowest at **window 23*
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
-| Betweenness | PageRank | Degree |
-|:---:|:---:|:---:|
-| ![Betweenness — Book 5](outputs/plots/book_5/centrality_betweenness.png) | ![PageRank — Book 5](outputs/plots/book_5/centrality_pagerank.png) | ![Degree — Book 5](outputs/plots/book_5/centrality_degree.png) |
+| Betweenness | Degree |
+|:---:|:---:|
+| ![Betweenness — Book 5](outputs/plots/book_5/centrality_betweenness.png) | ![Degree — Book 5](outputs/plots/book_5/centrality_degree.png) |
 
 **Degree distribution** — log-log P(k) · red dashed = power-law fit
 
@@ -484,6 +512,13 @@ The absolute minimum, **−0.116** at window 43, corresponds to the chapters cov
 
 ![Community graph — Book 6](outputs/plots/book_6/community_graph.png)
 
+**Community summary (top members)** — top-5 by internal weighted degree per community:
+- Community 1 (22 nodes): Louis, Fouquet, Colbert, Anne, Vallière
+- Community 2 (18 nodes): Aramis, Porthos, Baisemeaux, Biscarrat, Marchiali
+- Community 3 (10 nodes): Moliere, Fontaine, Pelisson, Percerin, Loret
+- Community 4 (17 nodes): Raoul, Athos, Beaufort, Grimaud, Montalais
+- Community 5 (6 nodes): Charles, Keroualle, Lorraine, Gwyn, Zunga
+
 **Sentiment heatmap** — top-25 characters · RdYlGn (−1 → +1) · white = no direct edge
 
 ![Sentiment heatmap — Book 6](outputs/plots/book_6/sentiment_heatmap.png)
@@ -494,9 +529,9 @@ The absolute minimum, **−0.116** at window 43, corresponds to the chapters cov
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
-| Betweenness | PageRank | Degree |
-|:---:|:---:|:---:|
-| ![Betweenness — Book 6](outputs/plots/book_6/centrality_betweenness.png) | ![PageRank — Book 6](outputs/plots/book_6/centrality_pagerank.png) | ![Degree — Book 6](outputs/plots/book_6/centrality_degree.png) |
+| Betweenness | Degree |
+|:---:|:---:|
+| ![Betweenness — Book 6](outputs/plots/book_6/centrality_betweenness.png) | ![Degree — Book 6](outputs/plots/book_6/centrality_degree.png) |
 
 **Degree distribution** — log-log P(k) · red dashed = power-law fit
 
@@ -628,10 +663,9 @@ The following centrality measures are computed on each window's graph and surfac
 | **Degree centrality** | Normalised fraction of nodes a character is connected to | Raw social reach — how many distinct characters someone interacts with |
 | **Betweenness centrality** | Fraction of shortest paths that pass through a node | Narrative brokers — characters who bridge factions or storylines |
 | **Closeness centrality** | Inverse mean shortest path to all other nodes | How quickly information/events propagate from a character |
-| **PageRank** | Eigenvector-style random walk with damping | Prestige — weighted by the importance of a character's connections |
 | **Eigenvector centrality** | Centrality proportional to the centrality of neighbours | Influence within the core — proximity to other highly central characters |
 
-Betweenness and PageRank are weighted by `weight` (co-occurrence count); closeness uses the unweighted topology.
+Betweenness and eigenvector are weighted by `weight` (co-occurrence count); closeness uses the unweighted topology.
 
 ### Network diameter
 
@@ -671,8 +705,7 @@ The five centrality measures tell consistent but complementary stories:
 
 **Degree vs. betweenness divergence.** In the final window of each book the character with the highest *degree* (most co-occurrence partners) is not always the same as the highest *betweenness* (best bridge between factions). This divergence is narratively meaningful: Louis XIV saturates Book 4's degree ranking because nearly every court scene includes him, but in the *final* window of Book 1 Richelieu tops betweenness — meaning the last chapters hinge on him as a structural pivot between the Musketeers' world and the court's, even though his total co-occurrence count is lower than Athos or Aramis.
 
-**PageRank as prestige indicator.** PageRank is high for characters who interact with other well-connected characters. In Books 1–2 the four musketeers form a tight prestige cluster — each boosts the others' scores. From Book 3 onwards Louis XIV's PageRank detaches from the musketeers': he is connected to everyone of importance (Fouquet, Colbert, Mazarin, the queen, the nobles), whereas the musketeers' network contracts around a smaller inner circle.
-
+**Eigenvector centrality and the core.** Eigenvector centrality is the most conservative measure — it rewards being embedded deep inside the densest, most mutually-connected subgraph. In every book this highlights the four musketeers' inner clique (Books 1–2) or the Louis–Fouquet–Colbert triumvirate (Books 4–6). Characters like d'Artagnan, who bridges many factions but lives at their periphery, score lower here than on betweenness — illustrating the distinction between *brokers* and *core members*.
 **Eigenvector centrality and the core.** Eigenvector centrality is the most conservative measure — it rewards being embedded deep inside the densest, most mutually-connected subgraph. In every book this highlights the four musketeers' inner clique (Books 1–2) or the Louis–Fouquet–Colbert triumvirate (Books 4–6). Characters like d'Artagnan, who bridges many factions but lives at their periphery, score lower here than on betweenness — illustrating the distinction between *brokers* and *core members*.
 
 **Closeness and narrative pacing.** Closeness centrality (how quickly a node can reach any other) tracks well with narrative agency: characters with high closeness are those whose actions have immediate ripple effects across the cast. In Book 6, closeness scores compress — the network has fewer nodes, and Aramis's and Louis's short paths to every other character reflect the plot's funnel: all storylines converge on the Iron Mask crisis.
@@ -764,15 +797,7 @@ The tables below allow direct visual comparison of each plot type across all six
 |:---:|:---:|:---:|
 | ![](outputs/plots/book_4/centrality_betweenness.png) | ![](outputs/plots/book_5/centrality_betweenness.png) | ![](outputs/plots/book_6/centrality_betweenness.png) |
 
-#### PageRank centrality rankings
 
-| Book 1 | Book 2 | Book 3 |
-|:---:|:---:|:---:|
-| ![](outputs/plots/book_1/centrality_pagerank.png) | ![](outputs/plots/book_2/centrality_pagerank.png) | ![](outputs/plots/book_3/centrality_pagerank.png) |
-
-| Book 4 | Book 5 | Book 6 |
-|:---:|:---:|:---:|
-| ![](outputs/plots/book_4/centrality_pagerank.png) | ![](outputs/plots/book_5/centrality_pagerank.png) | ![](outputs/plots/book_6/centrality_pagerank.png) |
 
 #### Degree distributions
 

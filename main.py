@@ -168,7 +168,7 @@ def process_book(book_key: str, filename: str) -> list[dict]:
                 title=f"{book_title} — Community Graph (full book)",
                 output_path=pdir / "community_graph.png",
             )
-            for met in ("betweenness", "pagerank", "degree"):
+            for met in ("betweenness", "degree"):
                 plot_centrality_ranking(
                     G_plot,
                     title=f"{book_title} — Top Characters by {met.capitalize()}",
