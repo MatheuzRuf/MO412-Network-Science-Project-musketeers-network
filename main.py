@@ -49,7 +49,7 @@ from src.analysis       import (
     compute_metrics, balance_ratio,
     giant_component_fractions, power_law_exponent,
     assortativity_metrics, louvain_metrics, triad_type_census,
-    centrality_metrics, network_diameter,
+    centrality_metrics, network_diameter, aggregate_book_graph,
     plot_community_graph, plot_centrality_ranking,
     plot_degree_distribution, plot_sentiment_heatmap,
     plot_ego_network, plot_metrics_over_time,
@@ -153,60 +153,51 @@ def process_book(book_key: str, filename: str) -> list[dict]:
 
     logger.info("Book %s done: %d windows with graphs", book_key, len(metrics_records))
 
-    # ── Summary plots for the final window of this book ───────────────────
+    # ── Summary plots: aggregate book-level graph (all windows combined) ──────
     if metrics_records:
-        last_rec = metrics_records[-1]
-        last_graph_path = GRAPHS_DIR / f"{last_rec['window']}.graphml"
-        if last_graph_path.exists():
-            try:
-                import networkx as _nx
-                G_plot = _nx.read_graphml(str(last_graph_path))
-                # Normalise attribute types after GraphML round-trip
-                for u, v, d in G_plot.edges(data=True):
-                    if "sign" in d:
-                        G_plot[u][v]["sign"] = int(float(d["sign"]))
-                    if "avg_sentiment" in d:
-                        G_plot[u][v]["avg_sentiment"] = float(d["avg_sentiment"])
-                    if "weight" in d:
-                        G_plot[u][v]["weight"] = float(d["weight"])
+        try:
+            G_plot = aggregate_book_graph(book_key, GRAPHS_DIR)
+            if G_plot.number_of_edges() == 0:
+                raise ValueError("empty aggregate graph")
 
-                book_title = book_key.replace("_", " ").title()
-                pdir = PLOTS_DIR / book_key
+            book_title = book_key.replace("_", " ").title()
+            pdir = PLOTS_DIR / book_key
 
-                plot_community_graph(
+            plot_community_graph(
+                G_plot,
+                title=f"{book_title} — Community Graph (full book)",
+                output_path=pdir / "community_graph.png",
+            )
+            for met in ("betweenness", "pagerank", "degree"):
+                plot_centrality_ranking(
                     G_plot,
-                    title=f"{book_title} — Community Graph",
-                    output_path=pdir / "community_graph.png",
+                    title=f"{book_title} — Top Characters by {met.capitalize()}",
+                    output_path=pdir / f"centrality_{met}.png",
+                    metric=met,
                 )
-                for met in ("betweenness", "pagerank", "degree"):
-                    plot_centrality_ranking(
-                        G_plot,
-                        title=f"{book_title} — Top Characters by {met.capitalize()}",
-                        output_path=pdir / f"centrality_{met}.png",
-                        metric=met,
-                    )
-                plot_degree_distribution(
+            plot_degree_distribution(
+                G_plot,
+                title=f"{book_title} — Degree Distribution (full book)",
+                output_path=pdir / "degree_distribution.png",
+            )
+            plot_sentiment_heatmap(
+                G_plot,
+                title=f"{book_title} — Sentiment Heatmap (full book)",
+                output_path=pdir / "sentiment_heatmap.png",
+            )
+            cent = centrality_metrics(G_plot)
+            if cent.get("betweenness"):
+                top_char = cent["betweenness"][0][0]
+                plot_ego_network(
                     G_plot,
-                    title=f"{book_title} — Degree Distribution",
-                    output_path=pdir / "degree_distribution.png",
+                    character=top_char,
+                    title=f"{book_title} — Ego Network: {top_char}",
+                    output_path=pdir / f"ego_{top_char.replace(' ', '_').lower()}.png",
+                    radius=1,
                 )
-                plot_sentiment_heatmap(
-                    G_plot,
-                    title=f"{book_title} — Sentiment Heatmap",
-                    output_path=pdir / "sentiment_heatmap.png",
-                )
-                cent = centrality_metrics(G_plot)
-                if cent.get("betweenness"):
-                    top_char = cent["betweenness"][0][0]
-                    plot_ego_network(
-                        G_plot,
-                        character=top_char,
-                        title=f"{book_title} — Ego Network: {top_char}",
-                        output_path=pdir / f"ego_{top_char.replace(' ', '_').lower()}.png",
-                    )
-                logger.info("Saved summary plots for %s → %s", book_key, pdir)
-            except Exception as exc:
-                logger.warning("Could not generate plots for %s: %s", book_key, exc)
+            logger.info("Saved summary plots for %s → %s", book_key, pdir)
+        except Exception as exc:
+            logger.warning("Could not generate plots for %s: %s", book_key, exc)
 
     return metrics_records
 

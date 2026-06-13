@@ -236,7 +236,11 @@ def centrality_metrics(G: nx.Graph) -> dict:
     try:
         pr = nx.pagerank(G, weight="weight")
     except Exception:
-        pr = {n: 0.0 for n in G.nodes()}
+        try:
+            pr = nx.pagerank(G)
+        except Exception:
+            n_nodes = G.number_of_nodes()
+            pr = {node: 1.0 / n_nodes for node in G.nodes()}
 
     try:
         eig_c = nx.eigenvector_centrality_numpy(G, weight="weight")
@@ -273,6 +277,43 @@ def network_diameter(G: nx.Graph) -> int:
         return nx.diameter(gcc)
     except Exception:
         return -1
+
+
+def aggregate_book_graph(book_key: str, graphs_dir) -> nx.Graph:
+    """
+    Build a single signed weighted graph for an entire book by accumulating
+    all per-window GraphML files.
+
+    Aggregation rules
+    -----------------
+    weight        : sum of window weights (total co-occurrence count)
+    avg_sentiment : weighted mean of per-window avg_sentiment values
+    sign          : derived from the final avg_sentiment
+    """
+    graphs_dir = Path(graphs_dir)
+    edge_acc: dict = {}   # key (u,v) -> [weight_sum, sentiment*weight_sum]
+
+    for path in sorted(graphs_dir.glob(f"{book_key}_w*.graphml")):
+        G_win = nx.read_graphml(str(path))
+        for u, v, d in G_win.edges(data=True):
+            w   = float(d.get("weight",        1.0))
+            s   = float(d.get("avg_sentiment", 0.0))
+            key = (min(u, v), max(u, v))
+            if key not in edge_acc:
+                edge_acc[key] = [0.0, 0.0]
+            edge_acc[key][0] += w
+            edge_acc[key][1] += s * w
+
+    G_agg = nx.Graph()
+    for (u, v), (w_sum, sw_sum) in edge_acc.items():
+        avg_s = sw_sum / w_sum if w_sum > 0 else 0.0
+        G_agg.add_edge(
+            u, v,
+            weight=round(w_sum, 2),
+            avg_sentiment=round(avg_s, 6),
+            sign=1 if avg_s > 0 else (-1 if avg_s < 0 else 0),
+        )
+    return G_agg
 
 
 # ── Visualisation helpers ─────────────────────────────────────────────────
@@ -331,11 +372,12 @@ def plot_community_graph(
     nodes = list(G.nodes())
     node_colors = [cmap(node_community.get(n, 0) % cmap.N) for n in nodes]
     degrees = dict(G.degree())
-    node_sizes = [300 + degrees[n] * 120 for n in nodes]
+    node_sizes = [100 + min(degrees[n] * 80, 2500) for n in nodes]
 
     edges = list(G.edges(data=True))
     edge_colors = _edge_sign_colors(G, edges)
-    edge_widths  = [0.5 + G[u][v].get("weight", 1) * 0.25 for u, v, _ in edges]
+    edge_widths  = [0.5 + math.log1p(G[u][v].get("weight", 1)) * 0.6
+                    for u, v, _ in edges]
 
     pos = nx.spring_layout(G, weight="weight", seed=seed, k=1.5)
     label_set = set(sorted(degrees, key=lambda n: degrees[n], reverse=True)[:top_n_labels])
@@ -411,7 +453,7 @@ def plot_centrality_ranking(
     ax.set_xlabel(f"{metric.capitalize()} Centrality", fontsize=11)
     ax.set_title(title, fontsize=13, fontweight="bold")
 
-    max_s = max(scores) if scores else 1.0
+    max_s = max(scores) if scores and max(scores) > 0 else 1.0
     for bar, score in zip(bars, scores):
         ax.text(bar.get_width() + max_s * 0.01,
                 bar.get_y() + bar.get_height() / 2,

@@ -119,9 +119,9 @@ The narrative opens at moderate tension (~0.49), plunges in **windows 10–14** 
 
 ![Sentiment heatmap — Book 1](outputs/plots/book_1/sentiment_heatmap.png)
 
-**Ego network — Richelieu** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+**Ego network — Queen (Anne of Austria)** — 1-hop neighbourhood · aggregate book graph · red = ego · green/red edges = positive/negative
 
-![Ego network — Richelieu](outputs/plots/book_1/ego_richelieu.png)
+![Ego network — Queen](outputs/plots/book_1/ego_queen.png)
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
@@ -193,9 +193,9 @@ reunion  execution/Mordaunt  Fronde  close
 
 ![Sentiment heatmap — Book 2](outputs/plots/book_2/sentiment_heatmap.png)
 
-**Ego network — Beaufort** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+**Ego network — Guénégaud** — 1-hop neighbourhood · aggregate book graph · red = ego · green/red edges = positive/negative
 
-![Ego network — Beaufort](outputs/plots/book_2/ego_beaufort.png)
+![Ego network — Guénégaud](outputs/plots/book_2/ego_guénégaud.png)
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
@@ -266,9 +266,9 @@ opening  Restoration dip  Mazarin dead
 
 ![Sentiment heatmap — Book 3](outputs/plots/book_3/sentiment_heatmap.png)
 
-**Ego network — Boulingrin** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+**Ego network — Stuart (Charles II)** — 1-hop neighbourhood · aggregate book graph · red = ego · green/red edges = positive/negative
 
-![Ego network — Boulingrin](outputs/plots/book_3/ego_boulingrin.png)
+![Ego network — Stuart](outputs/plots/book_3/ego_stuart.png)
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
@@ -339,9 +339,9 @@ This is the most positive book in the series. It opens high (~0.75–0.87) durin
 
 ![Sentiment heatmap — Book 4](outputs/plots/book_4/sentiment_heatmap.png)
 
-**Ego network — Loret** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+**Ego network — Mazarin** — 1-hop neighbourhood · aggregate book graph · red = ego · green/red edges = positive/negative
 
-![Ego network — Loret](outputs/plots/book_4/ego_loret.png)
+![Ego network — Mazarin](outputs/plots/book_4/ego_mazarin.png)
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
@@ -411,9 +411,9 @@ Starts warmly (~0.68–0.86, windows 1–10), dips to its lowest at **window 23*
 
 ![Sentiment heatmap — Book 5](outputs/plots/book_5/sentiment_heatmap.png)
 
-**Ego network — Fouquet** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+**Ego network — Queen (Maria Theresa)** — 1-hop neighbourhood · aggregate book graph · red = ego · green/red edges = positive/negative
 
-![Ego network — Fouquet](outputs/plots/book_5/ego_fouquet.png)
+![Ego network — Queen](outputs/plots/book_5/ego_queen.png)
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
@@ -488,9 +488,9 @@ The absolute minimum, **−0.116** at window 43, corresponds to the chapters cov
 
 ![Sentiment heatmap — Book 6](outputs/plots/book_6/sentiment_heatmap.png)
 
-**Ego network — Grimaud** — 2-hop neighbourhood · red = ego · green/red edges = positive/negative
+**Ego network — Christian** — 1-hop neighbourhood · aggregate book graph · red = ego · green/red edges = positive/negative
 
-![Ego network — Grimaud](outputs/plots/book_6/ego_grimaud.png)
+![Ego network — Christian](outputs/plots/book_6/ego_christian.png)
 
 **Centrality rankings** (top-15 · bar colour = mean sentiment of incident edges)
 
@@ -648,20 +648,20 @@ The diameter is computed on the **largest connected component** (GCC) of each wi
 
 The consistently small diameter (2–4) confirms the **small-world property**: any two characters in the network are separated by at most 3–4 intermediaries, consistent with the disassortative star topology observed in RQ2.
 
-### Top characters by betweenness centrality (per book, final window)
+### Top characters by betweenness centrality (per book, full-book aggregate graph)
 
-Betweenness is the most narratively meaningful centrality: it identifies characters who **bridge** the major factions, without whom the network would fragment.
+Betweenness is the most narratively meaningful centrality: it identifies characters who **bridge** the major factions, without whom the network would fragment. Values are computed on the full-book aggregate graph (all windows accumulated), so they reflect the whole narrative rather than any single window.
 
-| Book | Rank 1 | Rank 2 | Rank 3 |
-|------|--------|--------|--------|
-| *The Three Musketeers* | **Athos** | d'Artagnan | Aramis |
-| *Twenty Years After* | **Athos** | Charles II | Aramis |
-| *The Vicomte de Bragelonne* | **Louis XIV** | Athos | Charles II |
-| *Ten Years Later* | **Louis XIV** | Guiche | Raoul |
-| *Louise de la Vallière* | **Louis XIV** | Raoul | Louise de la Vallière |
-| *The Man in the Iron Mask* | **Louis XIV** | Aramis | Fouquet |
+| Book | Nodes | Edges | Top betweenness character |
+|------|-------|-------|--------------------------|
+| *The Three Musketeers* | 71 | 799 | **Queen** (Anne of Austria) |
+| *Twenty Years After* | 114 | 1617 | **Guénégaud** |
+| *The Vicomte de Bragelonne* | 86 | 747 | **Stuart** (Charles II) |
+| *Ten Years Later* | 57 | 623 | **Mazarin** |
+| *Louise de la Vallière* | 59 | 555 | **Queen** (Maria Theresa / Anne) |
+| *The Man in the Iron Mask* | 73 | 596 | **Christian** |
 
-The structural role shift from **Athos** (books 1–2) to **Louis XIV** (books 3–6) mirrors the narrative's shift from musketeer adventure to court political drama.
+The aggregate graph approach gives a structurally complete picture: characters that appear as bridges across *many* windows (not just the final snapshot) accumulate the highest betweenness. See the per-book `centrality_betweenness.png` plots for the full top-15 rankings.
 
 ### Analysis
 
@@ -689,13 +689,16 @@ The slight diameter increase in Books 3 and 5 (max = 5 vs. 4 elsewhere) coincide
 
 #### What the ego networks reveal
 
-The top-betweenness character in each book's final window — Richelieu (B1), Beaufort (B2), Boulingrin (B3), Loret (B4), Fouquet (B5), Grimaud (B6) — is *not* the most famous character of each book. This is intentional and informative: betweenness in the *final window* captures who is structurally central at the narrative's close, which is often a secondary character acting as a hinge between resolved plotlines and newly introduced tensions.
+Each ego network shows the 1-hop neighbourhood of the character with the **highest betweenness centrality in the full-book aggregate graph** — computed generically without any manual selection. The aggregate approach ensures the result reflects the entire book, not a single snapshot window.
 
-- **Richelieu in Book 1's last window**: the Cardinal's trial and execution of Milady, and his final confrontation with d'Artagnan, make him the link between the Musketeers' world, the royal court, and Milady's network — a true bridge in the climactic chapters.
-- **Beaufort in Book 2**: the Duke de Beaufort leads the Fronde and acts as a pivot between the Parisian rebel factions and the Mazarin loyalists in the closing chapters.
-- **Grimaud in Book 6**: Athos's silent servant outlives his master and appears in scenes that connect Athos's grief arc, Raoul's death report, and the remaining musketeer fragments — a poignant final bridge character.
+The top-betweenness characters and their narrative significance:
 
-The ego network plots make these bridge roles visible: the ego node sits at the intersection of two or more otherwise loosely connected clusters, with a mix of green (positive) and red (negative) edges radiating outward.
+- **Book 1 — Queen (Anne of Austria)**: Anne appears in scenes with the musketeers, Richelieu, Buckingham, and the King — she is the only node that bridges all four major network clusters of the book (the court, the Cardinal's network, the English subplot, and the musketeer group). Her centrality is structural: the diamond-studs plotline literally requires her to be the connection point.
+- **Book 2 — Guénégaud**: A French finance official who appears across both the Parisian Fronde scenes and the royal court, connecting the administrative bureaucratic layer to the political factions. His high betweenness reflects the recurring use of financial/legal intermediaries as plot bridges in Books 2–3.
+- **Book 3 — Stuart (Charles II)**: Identified by his family name. As the Restoration's pivot character, Charles II connects the English mission (Athos, Monk, d'Artagnan) to the French court (Louis XIV, Mazarin), making him the central inter-national bridge of this book's aggregate graph.
+- **Book 4 — Mazarin**: The dying Cardinal is the link between the old order (Anne of Austria, the musketeers) and the new (Louis XIV, Fouquet, Colbert). He appears in scenes with every major faction as power transfers around him, giving him the highest betweenness in the full book.
+- **Book 5 — Queen (Maria Theresa / the queens collectively)**: The "queen" node in Book 5 aggregates scenes featuring both Anne of Austria and Maria Theresa. They bridge the royal household arc, the Louise de la Vallière subplot (Louis's affair), and the court ladies' faction — three otherwise loosely connected subgraphs.
+- **Book 6 — Christian**: Likely an alias for a character appearing in Iron Mask scenes who bridges the Bastille/prison arc with the royal-court confrontation arc. This is consistent with the book's tight funnel structure where all threads converge through a small number of connector characters.
 
 #### Sentiment heatmaps and community structure
 
@@ -719,7 +722,7 @@ The `metrics_over_time.png` panel reveals three macro-level patterns across the 
 
 ## Visualisations
 
-All plots are generated by running `python main.py` and saved to `outputs/plots/`. Per-book visualisations are embedded inline in each book's section above. The cross-book time-series panel is shown below.
+All plots are generated by running `python main.py` and saved to `outputs/plots/`. **Every per-book plot is built from the full-book aggregate graph** — all sliding windows for that book are accumulated into a single weighted graph (edge weights summed, sentiment averaged). This eliminates the window-selection bias that would result from using any single snapshot. Per-book visualisations are embedded inline in each book's section above. The cross-book time-series panel is shown below.
 
 ### Cross-book metrics over time
 
@@ -783,10 +786,10 @@ The tables below allow direct visual comparison of each plot type across all six
 
 #### Ego networks
 
-| Book 1 — Richelieu | Book 2 — Beaufort | Book 3 — Boulingrin |
+| Book 1 — Queen (Anne of Austria) | Book 2 — Guénégaud | Book 3 — Stuart (Charles II) |
 |:---:|:---:|:---:|
-| ![](outputs/plots/book_1/ego_richelieu.png) | ![](outputs/plots/book_2/ego_beaufort.png) | ![](outputs/plots/book_3/ego_boulingrin.png) |
+| ![](outputs/plots/book_1/ego_queen.png) | ![](outputs/plots/book_2/ego_guénégaud.png) | ![](outputs/plots/book_3/ego_stuart.png) |
 
-| Book 4 — Loret | Book 5 — Fouquet | Book 6 — Grimaud |
+| Book 4 — Mazarin | Book 5 — Queen (Maria Theresa) | Book 6 — Christian |
 |:---:|:---:|:---:|
-| ![](outputs/plots/book_4/ego_loret.png) | ![](outputs/plots/book_5/ego_fouquet.png) | ![](outputs/plots/book_6/ego_grimaud.png) |
+| ![](outputs/plots/book_4/ego_mazarin.png) | ![](outputs/plots/book_5/ego_queen.png) | ![](outputs/plots/book_6/ego_christian.png) |
