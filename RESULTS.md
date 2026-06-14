@@ -5,15 +5,56 @@
 
 ---
 
+## Executive Summary
+
+- **Scale-free topology.** Degree distributions are heavy-tailed (mean power-law exponent γ̂ ≈ 2.02 across books), meaning a few hub characters concentrate most interactions.
+- **Hub → periphery structure.** Degree assortativity is strongly negative (r ≈ −0.29), indicating a star/spoke topology common in literary networks.
+- **Friendly cohesion and high triad balance.** The network is dominated by positive ties (≈87% positive edges) and structurally balanced triangles (≈85.5%), reflecting alliance motifs (the musketeer core).
+- **Dynamics mirror plot events.** Sentiment and balance time series reveal clear signatures at narrative crises (e.g., Book 2 civil-war troughs; Book 6 deaths and Iron Mask collapse).
+
+## How to read this file
+
+- **Window naming.** Time steps are named `book_<n>_w<first_ch>_<last_ch>` (e.g. `book_6_w043_052` covers chapters 43–52 of Book 6). Per-window metrics are in `outputs/metrics.csv`.
+- **Per-book aggregates.** Many figures use per-book aggregate graphs (all windows of a book combined): weights are summed and `avg_sentiment` is averaged; see the Methods box below.
+- **File locations.** Plots: `outputs/plots/`; per-window graphs: `outputs/graphs/`; dynamic GEXF for Gephi: `outputs/trilogy_dynamic.gexf`.
+
+## Methods & key parameters (quick reference)
+
+- **Scenes:** 2,000-character sliding spans with 1,000-character step; scenes kept if they contain at least two known characters.
+- **Windowing:** 10-chapter rolling windows with step = 1 chapter (each window is one time step used across the pipeline).
+- **Edge construction:** undirected edge if two characters co-occur in the same scene; **weight** = co-occurrence frequency across scenes in the window (used for weighted centralities).
+- **Sentiment & sign:** `avg_sentiment` = mean VADER compound across all scenes where the pair co-appears in the window. `sign = +1` if `avg_sentiment >= 0`, else `sign = -1`.
+- **Structural balance:** a triangle is balanced if the product of the three edge signs = +1; `balance` = balanced_triangles / total_triangles.
+- **Aggregates (per-book):** per-book graphs are produced by summing edge weights across all windows of a book and averaging `avg_sentiment` (weighted by co-occurrence count where applicable).
+
+## Notable low-sentiment windows (most negative)
+
+| Rank | Window | Book | Chapters | Avg sentiment | Narrative context |
+|------|--------|------|---------:|--------------:|------------------|
+| 1 | book_6_w043_052 | book_6 | 43–52 | -0.1163 | Porthos's death / Locmaria cave; Aramis's desperate flight |
+| 2 | book_2_w029_038 | book_2 | 29–38 | -0.0880 | English civil-war arc — execution / Mordaunt revenge sequences |
+| 3 | book_6_w044_053 | book_6 | 44–53 | -0.0685 | Immediate aftermath of the Iron Mask crisis and death sequences |
+| 4 | book_2_w031_040 | book_2 | 31–40 | -0.0525 | Continued English crisis / Mordaunt subplot |
+| 5 | book_2_w030_039 | book_2 | 30–39 | -0.0204 | Part of the execution / revenge sequence in Book 2 |
+
+---
+
 ## Corpus Overview
 
 | Metric | Value |
 |--------|-------|
 | Total time steps (windows) | **370** |
-| Unique characters (nodes, all books) | **269** |
-| Total edge-instances (across all windows) | **56 631** |
+| Total unique characters (nodes, all books) | **268** |
+| Total node-instances (sum across all windows) | **8,515** |
+| Total unique links (aggregate graph) | **3,777** |
+| Total edge-instances (sum of per-window edge counts) | **53,814** |
 | Mean nodes per window | 23.5 (min 11 / max 43) |
-| Mean edges per window | 153 (min 37 / max 418) |
+| Mean edges per window | 145.44 (min 37 / max 391) |
+| Mean degree (aggregate graph) | 28.19 (median 17 / max 210) |
+| Degree distribution (percentiles) | p10=7, p25=10, p50=17, p75=30, p90=62 |
+| Average shortest path length (largest connected component) | 1.93 |
+| Average clustering coefficient (local) | 0.7779 |
+| Transitivity (global clustering) | 0.3348 |
 | Positive edges (overall) | **87.1 %** |
 | Negative edges (overall) | 12.9 % |
 | Mean edge sentiment (VADER compound) | **0.562** |
@@ -606,7 +647,16 @@ $$\hat{\gamma} = 1 + n \left( \sum_{i} \ln \frac{k_i}{k_{\min} - 0.5} \right)^{-
 - **Degree assortativity r ≈ −0.29** (disassortative): hub characters (musketeers, the King) preferentially connect to low-degree peripheral characters — a star/spoke topology typical of literary social networks.
 - **Sentiment assortativity r ≈ +0.13** (weakly positive): characters that interact positively tend to cluster in friendly circles; antagonists cluster with other antagonists. The effect is consistent but small, suggesting partial but not complete social homophily by sentiment.
 
----
+#### Robustness & recommended statistical tests
+
+To strengthen and quantify the claims in RQ2 and RQ3, we recommend running and reporting the following diagnostics (include the test statistic, a 95% CI where relevant, and a short interpretation):
+
+- **Power‑law diagnostics (Clauset et al.).** Estimate `k_min` and γ̂ using a package such as `powerlaw`. Report the goodness-of-fit p‑value and 95% bootstrap CI for γ̂; run likelihood‑ratio tests vs lognormal and exponential alternatives and report LR statistics and p‑values. Provide CCDF plots with the fitted region shaded.
+- **Assortativity permutation tests.** Test significance of degree and sentiment assortativity by generating null distributions: (a) degree‑preserving edge rewiring to test degree assortativity; (b) sign‑preserving and sign‑randomized permutations to test sentiment assortativity. Use ~1,000 permutations to obtain z‑scores and p‑values.
+- **Triad/sign significance.** Compare the observed balanced‑triangle share to a null distribution obtained by permuting signs while preserving the overall sign histogram (or by rewiring edges while preserving degree). Report z‑score and p‑value for the observed balance ratio.
+- **Bootstrap confidence intervals.** Provide 95% bootstrap CIs for mean sentiment and mean balance per book (resample windows with replacement; a block bootstrap can be used to preserve temporal dependence across nearby windows).
+
+Additional recommended visuals: overlaid CCDFs with fitted exponents, centrality heatmap time series (top‑15 characters × windows) to show role shifts, and a community‑persistence Sankey/stacked area plot with NMI (normalized mutual information) per window.
 
 ### RQ3 — Balance & Communities
 
@@ -750,6 +800,14 @@ The `metrics_over_time.png` panel reveals three macro-level patterns across the 
 2. **Density and balance move together.** Windows with high density (more edges per node) almost always have higher balance ratios — denser co-occurrence means more triangles, and more triangles in a predominantly positive network tilts toward the balanced +++ type. The negative correlation between density and negative-edge fraction is consistent across all books.
 
 3. **Community count spikes predict plot crises.** The `n_communities` panel shows sharp upward spikes at known crisis points: the Fronde's opening (Book 2, windows 18–22), the Iron Mask discovery (Book 6, windows 8–12), and Fouquet's arrest (Book 6, windows 30–35). Faction count rising above 3 indicates the narrative has temporarily fragmented into parallel, loosely-connected threads — a reliable structural signature of conflict escalation.
+
+---
+
+## Writing, tables & accessibility
+
+- **Top‑tables:** Add compact tables: per‑book γ̂ ± CI, assortativity ± p‑value, mean balance ± CI, negative-window counts (we computed these earlier).
+- **Figure captions:** Every figure gets a caption that states the dataset, the metric plotted, and the key take-away (1 sentence).
+- **Short takeaways per book:** In each book section, add a 1‑line “Key structural takeaway” to help a presenter pick slides.
 
 ---
 

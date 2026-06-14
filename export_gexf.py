@@ -94,6 +94,26 @@ def build_gexf(windows: list[tuple[str, nx.Graph]]) -> ET.Element:
                 int(data.get("sign", 1)),
             ))
 
+    # ── coalesce contiguous node spells (merge adjacent windows)
+    def _merge_spells(spells: list[tuple[int,int]]) -> list[tuple[int,int]]:
+        if not spells:
+            return []
+        spells_sorted = sorted(spells, key=lambda x: x[0])
+        merged = []
+        cur_s, cur_e = spells_sorted[0]
+        for s, e in spells_sorted[1:]:
+            # merge if contiguous or overlapping
+            if s <= cur_e:
+                cur_e = max(cur_e, e)
+            else:
+                merged.append((cur_s, cur_e))
+                cur_s, cur_e = s, e
+        merged.append((cur_s, cur_e))
+        return merged
+
+    for nid, info in node_data.items():
+        info["spells"] = _merge_spells(info["spells"])
+
     # ── write nodes ───────────────────────────────────────────────────────
     nodes_el = ET.SubElement(graph, "nodes")
     for nid, info in sorted(node_data.items()):
@@ -132,7 +152,7 @@ def write_timestep_map(windows: list[tuple[str, nx.Graph]]) -> None:
         book = re.match(r"(book_\d+)_", win_id).group(1)
         lines.append(f"{t}\t{win_id}\t{book}")
     MAP_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"  Time-step map → {MAP_FILE}")
+    print(f"  Time-step map -> {MAP_FILE}")
 
 
 def main() -> None:
@@ -151,7 +171,7 @@ def main() -> None:
     tree.write(OUT_FILE, encoding="utf-8", xml_declaration=True)
 
     size_mb = OUT_FILE.stat().st_size / 1_048_576
-    print(f"  Written → {OUT_FILE}  ({size_mb:.1f} MB)")
+    print(f"  Written -> {OUT_FILE}  ({size_mb:.1f} MB)")
     print()
     print("Book time ranges:")
     from collections import defaultdict
@@ -160,14 +180,14 @@ def main() -> None:
         book = re.match(r"(book_\d+)_", win_id).group(1)
         by_book[book].append(t)
     for book, ts in sorted(by_book.items()):
-        print(f"  {book}: t={ts[0]}–{ts[-1]}  ({len(ts)} windows)")
+        print(f"  {book}: t={ts[0]}-{ts[-1]}  ({len(ts)} windows)")
     print()
     print("Gephi quick-start:")
-    print("  1. File → Open → trilogy_dynamic.gexf")
+    print("  1. File -> Open -> trilogy_dynamic.gexf")
     print("  2. Layout: ForceAtlas 2  (run ~30 s, then stop)")
-    print("  3. Appearance → Nodes → Colour → Partition → first_book")
-    print("  4. Appearance → Edges → Colour → Ranking → avg_sentiment  (red=-1 … green=+1)")
-    print("  5. Timeline panel (bottom) → Enable → press Play")
+    print("  3. Appearance -> Nodes -> Colour -> Partition -> first_book")
+    print("  4. Appearance -> Edges -> Colour -> Ranking -> avg_sentiment  (red=-1 ... green=+1)")
+    print("  5. Timeline panel (bottom) -> Enable -> press Play")
     print("  6. Screen-record the canvas while Timeline plays")
 
 
